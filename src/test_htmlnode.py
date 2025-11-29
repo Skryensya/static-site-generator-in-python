@@ -16,10 +16,6 @@ class TestHtmlNode(unittest.TestCase):
         node = HTMLNode("div", None, None, {"href": "https://boot.dev"})
         node2 = HTMLNode("div", None, None, {"href": "https://boot.dev"})
         self.assertEqual(node, node2)
-    
-    
-    
-     
 
 
 if __name__ == "__main__":
