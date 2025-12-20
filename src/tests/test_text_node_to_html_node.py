@@ -16,9 +16,9 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.to_html(), f'<a href="#url">This is a link node</a>')
 
     def test_code(self):
-        node = TextNode("This is a code node", TextType.CODE)
+        node = TextNode("code", TextType.CODE)
         html_node = text_node_to_html_node(node)
-        self.assertEqual(html_node.to_html(), f'<code>This is a code node</code>')
+        self.assertEqual(html_node.to_html(), f'<code>code</code>')
 
     def test_img(self):
         node = TextNode("This is an image node", TextType.IMAGE, "#image_src")
