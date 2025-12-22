@@ -69,6 +69,44 @@ class TestMarkdownToHtmlNode(unittest.TestCase):
             "<div><p>The shopping list:</p><ul><li>bread</li><li>milk</li><li>potato chips</li></ul></div>", 
         )
     
+    def test_ol_block(self):
+        md = """The shopping list:
+
+        1. garlic bread
+        2. soy milk
+        3. vegan potato chips
+
+        """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><p>The shopping list:</p><ol><li>garlic bread</li><li>soy milk</li><li>vegan potato chips</li></ol></div>", 
+        )
+    
+    def test_heading_blocks(self):
+        md = """
+        # esto es un h1
+
+        ## esto es un h2
+
+        ### esto es un h3
+
+        #### esto es un h4
+
+        ##### esto es un h5
+
+        ###### esto es un h6
+        """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><h1>esto es un h1</h1><h2>esto es un h2</h2><h3>esto es un h3</h3><h4>esto es un h4</h4><h5>esto es un h5</h5><h6>esto es un h6</h6></div>",  
+        )
+    
 
 
 

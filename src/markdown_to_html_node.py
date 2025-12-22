@@ -2,6 +2,7 @@
 from src.markdown_to_blocks import markdown_to_blocks
 from src.block_to_block_type import block_to_block_type, BlockType 
 from src.parentnode import ParentNode
+from src.leaftnode import LeafNode
 from src.text_to_textnodes import text_to_textnodes
 from src.text_node_to_html_node import text_node_to_html_node
 from src.textnode import TextNode, TextType
@@ -22,7 +23,7 @@ def obtener_heading(texto):
 
     return None
 
-def get_node_tag(block, block_type):
+def get_node_tag(block_type, block):
     match block_type:
         case BlockType.PARAGRAPH:
             node_tag = "p"
@@ -49,31 +50,62 @@ def text_to_children(text):
     return nodes
 
 
-def clean_text(text, block_type):
-    trim_lines = [line.lstrip(" ") for line in text.split("\n")]
-    joined_text = "\n".join(trim_lines)
-    if block_type == BlockType.CODE: 
-        return joined_text.lstrip("```\n").rstrip("```")
-    elif  block_type == BlockType.QUOTE: 
-        return joined_text.replace("> ", "")
-    else:
-        return joined_text.replace("\n", " ")
+ 
+    
         
 
 def markdown_to_html_node(markdown):
     md_blocks = markdown_to_blocks(markdown)
     children = []
     for block in md_blocks:
-        block_type = block_to_block_type(block)
-        node_tag = get_node_tag(block, block_type)
-        if (block_type == BlockType.CODE):
-            cleaned_text = clean_text(block, BlockType.CODE)  
-            block_node = ParentNode("pre", [text_node_to_html_node(TextNode(cleaned_text, TextType.CODE) )])
-        else:
-            cleaned_text = clean_text(block, block_type) 
-            block_node = ParentNode(node_tag, text_to_children(cleaned_text))
+     
 
-      
+        # trim excess whitespace
+        trimmed_block_lines = [line.lstrip(" ") for line in block.split("\n")]
+        trimmed_block = "\n".join(trimmed_block_lines)
+
+        block_type = block_to_block_type(trimmed_block)
+        node_tag = get_node_tag(block_type, trimmed_block)
+ 
+
+        match block_type:
+            case BlockType.CODE:
+                clean_block = trimmed_block.lstrip("```\n").rstrip("```")
+                block_node = ParentNode("pre", [text_node_to_html_node(TextNode(clean_block, TextType.CODE) )])
+                
+            case BlockType.UNORDERED_LIST: 
+                clean_block = trimmed_block.replace("\n", "")
+                list_items = list(filter(lambda x: x != "", clean_block.split("- ")))
+                list_nodes = []
+                for li in list_items: 
+                    li_node = LeafNode("li", li)
+                    list_nodes.append(li_node)
+
+                block_node = ParentNode("ul", list_nodes)
+                
+            case BlockType.ORDERED_LIST: 
+                list_items = trimmed_block.split("\n")
+                clean_list_items = list(map(lambda x: x.split(". ")[1], list_items)) 
+                list_nodes = []
+                for li in clean_list_items: 
+                    li_node = LeafNode("li", li)
+                    list_nodes.append(li_node)
+
+                block_node = ParentNode("ol", list_nodes) 
+
+            case BlockType.HEADING: 
+                clean_block = trimmed_block.split("# ")[1]
+                # debug_print(clean_block, "clean_block")
+                block_node = LeafNode(node_tag, clean_block)
+
+            case BlockType.QUOTE:
+                clean_block = trimmed_block.replace("> ", "")
+                block_node = ParentNode(node_tag, text_to_children(clean_block))
+
+            case _:
+                clean_block = trimmed_block.replace("\n", " ")
+                block_node = ParentNode(node_tag, text_to_children(clean_block))
+    
         children.append(block_node) 
 
     result = ParentNode("div",  children)  
