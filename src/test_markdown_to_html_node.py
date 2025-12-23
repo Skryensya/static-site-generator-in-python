@@ -84,6 +84,36 @@ class TestMarkdownToHtmlNode(unittest.TestCase):
             html,
             "<div><p>The shopping list:</p><ol><li>garlic bread</li><li>soy milk</li><li>vegan potato chips</li></ol></div>", 
         )
+
+    def test_ul_block_with_nested_content(self):
+        md = """The shopping list:
+
+        - bread _With protein_
+        - milk **with chocolate**
+        - potato `chips`
+
+        """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><p>The shopping list:</p><ul><li>bread <i>With protein</i></li><li>milk <b>with chocolate</b></li><li>potato <code>chips</code></li></ul></div>", 
+        )
+
+    def test_ul_block_with_nested_links(self):
+        md = """
+        - [Why Glorfindel is More Impressive than Legolas](/blog/glorfindel)
+        - [Why Tom Bombadil Was a Mistake](/blog/tom)
+        - [The Unparalleled Majesty of "The Lord of the Rings"](/blog/majesty)
+        """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            '<div><ul><li><a href="/blog/glorfindel">Why Glorfindel is More Impressive than Legolas</a></li><li><a href="/blog/tom">Why Tom Bombadil Was a Mistake</a></li><li><a href="/blog/majesty">The Unparalleled Majesty of "The Lord of the Rings"</a></li></ul></div>', 
+        )
     
     def test_heading_blocks(self):
         md = """
@@ -106,6 +136,11 @@ class TestMarkdownToHtmlNode(unittest.TestCase):
             html,
             "<div><h1>esto es un h1</h1><h2>esto es un h2</h2><h3>esto es un h3</h3><h4>esto es un h4</h4><h5>esto es un h5</h5><h6>esto es un h6</h6></div>",  
         )
+
+
+
+
+
     
 
 

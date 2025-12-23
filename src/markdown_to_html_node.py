@@ -77,9 +77,9 @@ def markdown_to_html_node(markdown):
                 clean_block = trimmed_block.replace("\n", "")
                 list_items = list(filter(lambda x: x != "", clean_block.split("- ")))
                 list_nodes = []
-                for li in list_items: 
-                    li_node = LeafNode("li", li)
-                    list_nodes.append(li_node)
+                for li in list_items:  
+                    list_nodes.append(ParentNode("li", text_to_children(li))) 
+                  
 
                 block_node = ParentNode("ul", list_nodes)
                 
@@ -88,8 +88,7 @@ def markdown_to_html_node(markdown):
                 clean_list_items = list(map(lambda x: x.split(". ")[1], list_items)) 
                 list_nodes = []
                 for li in clean_list_items: 
-                    li_node = LeafNode("li", li)
-                    list_nodes.append(li_node)
+                    list_nodes.append(ParentNode("li", text_to_children(li))) 
 
                 block_node = ParentNode("ol", list_nodes) 
 
@@ -99,7 +98,7 @@ def markdown_to_html_node(markdown):
                 block_node = LeafNode(node_tag, clean_block)
 
             case BlockType.QUOTE:
-                clean_block = trimmed_block.replace("> ", "")
+                clean_block = trimmed_block.replace(">", "").lstrip()
                 block_node = ParentNode(node_tag, text_to_children(clean_block))
 
             case _:
