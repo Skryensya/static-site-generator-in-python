@@ -7,6 +7,5 @@ def main():
     copy_assets(source_dir="static", destination_dir="docs")
     generate_pages_recursive("content", "template.html" , "docs", basepath)
     
-
 if __name__ == "__main__":
     main()

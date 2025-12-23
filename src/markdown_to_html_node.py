@@ -95,7 +95,7 @@ def markdown_to_html_node(markdown):
             case BlockType.HEADING: 
                 clean_block = trimmed_block.split("# ")[1]
                 # debug_print(clean_block, "clean_block")
-                block_node = LeafNode(node_tag, clean_block)
+                block_node = ParentNode(node_tag, text_to_children(clean_block)) 
 
             case BlockType.QUOTE:
                 clean_block = trimmed_block.replace(">", "").lstrip()
