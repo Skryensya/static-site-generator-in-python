@@ -15,7 +15,7 @@ def create_file(dest, content):
         file.write(content)
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     abs_from_path = os.path.abspath(from_path)
@@ -42,6 +42,8 @@ def generate_page(from_path, template_path, dest_path):
     # print(content_html)
     page = replace_section("Title", template, title)
     page = replace_section("Content", page, content_html)
+    page = page.replace('href="/', f'href="{basepath}')
+    page = page.replace('src="/', f'src="{basepath}')
 
     create_file(abs_dest_path, page)
     # print(page)

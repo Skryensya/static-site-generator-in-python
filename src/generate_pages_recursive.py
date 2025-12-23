@@ -2,7 +2,7 @@ from generate_page import generate_page
 import os
 
 
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     abs_content = os.path.abspath(dir_path_content) 
     abs_dest = os.path.abspath(dest_dir_path)
 
@@ -12,9 +12,9 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
        
         if os.path.isfile(joined_dir):
             dest_dir = os.path.join(abs_dest, dir.rsplit(".")[0]+".html")
-            generate_page(joined_dir, template_path, dest_dir)
+            generate_page(joined_dir, template_path, dest_dir, basepath)
         else:
-            generate_pages_recursive(joined_dir, template_path, dest_dir)
+            generate_pages_recursive(joined_dir, template_path, dest_dir, basepath)
 
 
     # generate_page("content/index.md", template_path, "public/index.html")
