@@ -1,11 +1,11 @@
 
-from src.markdown_to_blocks import markdown_to_blocks
-from src.block_to_block_type import block_to_block_type, BlockType 
-from src.parentnode import ParentNode
-from src.leaftnode import LeafNode
-from src.text_to_textnodes import text_to_textnodes
-from src.text_node_to_html_node import text_node_to_html_node
-from src.textnode import TextNode, TextType
+from markdown_to_blocks import markdown_to_blocks
+from block_to_block_type import block_to_block_type, BlockType 
+from parentnode import ParentNode
+from leaftnode import LeafNode
+from text_to_textnodes import text_to_textnodes
+from text_node_to_html_node import text_node_to_html_node
+from textnode import TextNode, TextType
 
 def debug_print(smothing, label):
     print(f"\n-------({label})-----------")

@@ -1,5 +1,5 @@
 import unittest 
-from src.block_to_block_type import BlockType, block_to_block_type
+from block_to_block_type import BlockType, block_to_block_type
 
 class TestBlockToBlockType(unittest.TestCase):
     def test_block_to_block_type_headings(self):

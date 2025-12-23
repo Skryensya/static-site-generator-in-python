@@ -1,8 +1,10 @@
-from src.textnode import TextNode, TextType
+from copy_assets import copy_assets
+from generate_page import generate_page
 
 def main():
-    obj = TextNode("This is some anchor text", TextType.LINK, "https://www.boot.dev")
-    print(obj)
+    copy_assets(source_dir="static", destination_dir="public")
+    generate_page("content/index.md", "template.html", "public/index.html")
+    
 
 if __name__ == "__main__":
     main()

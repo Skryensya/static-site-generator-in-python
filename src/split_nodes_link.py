@@ -1,6 +1,6 @@
 import math
-from src.textnode import TextNode, TextType
-from src.extract_markdown_links import extract_markdown_links
+from textnode import TextNode, TextType
+from extract_markdown_links import extract_markdown_links
 
 def split_nodes_link(old_nodes):
     new_nodes = []

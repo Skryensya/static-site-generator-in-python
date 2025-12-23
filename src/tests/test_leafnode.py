@@ -1,6 +1,6 @@
 import unittest
 
-from src.leaftnode import LeafNode
+from leaftnode import LeafNode
 
 
 class TestLeafNode(unittest.TestCase):

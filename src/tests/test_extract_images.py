@@ -1,5 +1,5 @@
 import unittest
-from src.extract_markdown_images import extract_markdown_images
+from extract_markdown_images import extract_markdown_images
 
 class TestTextNode(unittest.TestCase):
    def test_extract_markdown_images(self):

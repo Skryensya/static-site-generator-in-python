@@ -1,7 +1,7 @@
-from src.split_nodes_delimiter import split_nodes_delimiter
-from src.split_nodes_image import split_nodes_image
-from src.split_nodes_link import split_nodes_link
-from src.textnode import TextNode, TextType
+from split_nodes_delimiter import split_nodes_delimiter
+from split_nodes_image import split_nodes_image
+from split_nodes_link import split_nodes_link
+from textnode import TextNode, TextType
 
 def text_to_textnodes(text): 
     base_node = [TextNode(text, TextType.TEXT)]
